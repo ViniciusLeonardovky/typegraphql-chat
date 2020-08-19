@@ -13,13 +13,13 @@ export class ListAllUserRoomsService {
     const roomsRespository = getRepository(Room);
     const usersRoomsRespository = getRepository(UsersRooms);
 
-    const user_rooms_id = await usersRoomsRespository.find({
+    const user_rooms = await usersRoomsRespository.find({
       where: { user_id: ctx.req.session!.userId },
       select: ['room_id'],
     });
 
     const rooms = await roomsRespository.findByIds(
-      user_rooms_id.map((room) => {
+      user_rooms.map((room) => {
         return room.room_id;
       })
     );
