@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'dotenv/config';
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
 import session from 'express-session';
@@ -24,17 +25,18 @@ import { createSchema } from './utils/createSchema';
   app.use(
     cors({
       credentials: true,
-      origin: 'http://localhost:3000',
+      origin: process.env.CORS_ORIGIN,
     })
   );
 
   app.use(
     session({
       store: new RedisStore({
-        client: redis as any,
+        client: redis,
+        disableTouch: true,
       }),
       name: 'qid',
-      secret: 'axdslkdfjoiq123xd12',
+      secret: process.env.SESSION_SECRET || '129818hdsauid1287ydhwui',
       resave: false,
       saveUninitialized: false,
       cookie: {
@@ -48,6 +50,8 @@ import { createSchema } from './utils/createSchema';
   apolloServer.applyMiddleware({ app });
 
   app.listen(4000, () => {
-    console.log('server started on http://localhost:4000/graphql');
+    console.log(
+      `server started on http://localhost:${process.env.PORT}/graphql`
+    );
   });
 })();

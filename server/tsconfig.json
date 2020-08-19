@@ -7,7 +7,7 @@
     "outDir": "./dist",
     "moduleResolution": "node",
     "declaration": false,
-
+    "allowJs": true,
     "composite": false,
     "removeComments": true,
     "noImplicitAny": true,

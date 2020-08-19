@@ -43,9 +43,9 @@ export class Room extends BaseEntity {
 
   @Field()
   @Column({ type: 'varchar' })
-  type: string;
+  type: 'public' | 'private';
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, { eager: true })
   @JoinTable({
     name: 'users_rooms',
     joinColumns: [{ name: 'room_id' }],

@@ -9,6 +9,7 @@ import { ChangeUserStatusResolver } from '../modules/user/resolvers/ChangeUserSt
 import { CreateRoomResolver } from '../modules/room/resolvers/CreateRoomResolver';
 import { ListAllPublicRoomsResolver } from '../modules/room/resolvers/ListAllPublicRoomsResolver';
 import { ListAllUserRoomsResolver } from '../modules/room/resolvers/ListAllUserRoomsResolver';
+import { JoinPublicRoomResolver } from '../modules/room/resolvers/JoinPublicRoomResolver';
 
 export const createSchema = () =>
   buildSchema({
@@ -22,6 +23,7 @@ export const createSchema = () =>
       CreateRoomResolver,
       ListAllPublicRoomsResolver,
       ListAllUserRoomsResolver,
+      JoinPublicRoomResolver,
     ],
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;

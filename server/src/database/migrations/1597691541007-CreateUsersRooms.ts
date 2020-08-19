@@ -38,7 +38,7 @@ export class CreateUsersRooms1597691541007 implements MigrationInterface {
             referencedTableName: 'users',
             referencedColumnNames: ['id'],
             columnNames: ['user_id'],
-            onDelete: 'CASCADE',
+            onDelete: 'SET NULL',
             onUpdate: 'CASCADE',
           },
           {
@@ -46,7 +46,7 @@ export class CreateUsersRooms1597691541007 implements MigrationInterface {
             referencedTableName: 'rooms',
             referencedColumnNames: ['id'],
             columnNames: ['room_id'],
-            onDelete: 'CASCADE',
+            onDelete: 'SET NULL',
             onUpdate: 'CASCADE',
           },
         ],

@@ -8,8 +8,6 @@ import {
 } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 
-// import { User } from './User';
-
 @ObjectType()
 @Entity({ name: 'users_rooms' })
 export class UsersRooms extends BaseEntity {
