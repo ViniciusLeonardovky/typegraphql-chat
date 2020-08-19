@@ -1,1 +1,1 @@
-# typegraphql-chat-
+# typegraphql-chat
