@@ -15,6 +15,7 @@
     "@types/express-session": "^1.17.0",
     "@types/graphql": "^14.5.0",
     "@types/ioredis": "^4.17.3",
+    "@types/uuid": "^8.3.0",
     "ts-node": "^8.10.2",
     "ts-node-dev": "^1.0.0-pre.57",
     "tsconfig-paths": "^3.9.0",
@@ -33,6 +34,7 @@
     "pg": "^8.3.0",
     "reflect-metadata": "^0.1.13",
     "type-graphql": "^1.0.0-rc.3",
-    "typeorm": "^0.2.25"
+    "typeorm": "^0.2.25",
+    "uuid": "^8.3.0"
   }
 }
