@@ -1,7 +1,7 @@
 import { Resolver, Mutation, UseMiddleware, Ctx } from 'type-graphql';
 
 import { ChangeUserStatusService } from '../services/ChangeUserStatusService';
-import { User } from '../../../entity/User';
+import { User } from '../../../entities/User';
 import { ensureAuthenticated } from '../../middlewares/ensureAuthenticated';
 import { Context } from '../../../types/Context';
 

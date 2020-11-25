@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
 
-import { Room } from '../../../entity/Room';
+import { Room } from '../../../entities/Room';
 
 export class ListAllPublicRoomsService {
   public async execute(): Promise<Room[]> {

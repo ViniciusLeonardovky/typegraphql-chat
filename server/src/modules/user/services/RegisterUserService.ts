@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 
-import { User } from '../../../entity/User';
+import { User } from '../../../entities/User';
 
 interface IRequest {
   name: string;

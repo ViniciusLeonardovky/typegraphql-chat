@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Arg, Ctx } from 'type-graphql';
 
 import { AuthenticateUserService } from '../services/AuthenticateUserService';
-import { User } from '../../../entity/User';
+import { User } from '../../../entities/User';
 import { Context } from '../../../types/Context';
 
 @Resolver()

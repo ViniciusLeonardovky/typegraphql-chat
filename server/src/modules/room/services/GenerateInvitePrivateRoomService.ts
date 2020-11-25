@@ -4,7 +4,7 @@ import { redis } from '../../../redis';
 
 import { invitePrivateRoomPrefix } from '../../constants/redisPrefixes';
 
-import { Room } from '../../../entity/Room';
+import { Room } from '../../../entities/Room';
 
 import { Context } from '../../../types/Context';
 

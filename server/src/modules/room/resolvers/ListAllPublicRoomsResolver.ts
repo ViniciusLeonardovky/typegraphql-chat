@@ -1,7 +1,7 @@
 import { Resolver, UseMiddleware, Query } from 'type-graphql';
 
 import { ListAllPublicRoomsService } from '../services/ListAllPublicRoomsService';
-import { Room } from '../../../entity/Room';
+import { Room } from '../../../entities/Room';
 import { ensureAuthenticated } from '../../middlewares/ensureAuthenticated';
 
 @Resolver()

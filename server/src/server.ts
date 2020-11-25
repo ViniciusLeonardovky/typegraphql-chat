@@ -49,7 +49,7 @@ import { createSchema } from './utils/createSchema';
 
   apolloServer.applyMiddleware({ app });
 
-  app.listen(4000, () => {
+  app.listen(process.env.PORT, () => {
     console.log(
       `server started on http://localhost:${process.env.PORT}/graphql`
     );

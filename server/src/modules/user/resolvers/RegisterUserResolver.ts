@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Arg, Query, UseMiddleware } from 'type-graphql';
 
 import { RegisterUserService } from '../services/RegisterUserService';
-import { User } from '../../../entity/User';
+import { User } from '../../../entities/User';
 import { ensureAuthenticated } from '../../middlewares/ensureAuthenticated';
 
 @Resolver()

@@ -1,9 +1,9 @@
 import { getRepository } from 'typeorm';
 import { redis } from '../../../redis';
 
-import { Room } from '../../../entity/Room';
-import { User } from '../../../entity/User';
-import { UsersRooms } from '../../../entity/UsersRooms';
+import { Room } from '../../../entities/Room';
+import { User } from '../../../entities/User';
+import { UsersRooms } from '../../../entities/UsersRooms';
 
 import { invitePrivateRoomPrefix } from '../../constants/redisPrefixes';
 import { Context } from '../../../types/Context';

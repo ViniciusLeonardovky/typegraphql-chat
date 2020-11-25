@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 
-import { Room } from '../../../entity/Room';
-import { UsersRooms } from '../../../entity/UsersRooms';
+import { Room } from '../../../entities/Room';
+import { UsersRooms } from '../../../entities/UsersRooms';
 import { Context } from '../../../types/Context';
 
 interface IRequest {

@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Arg, UseMiddleware, Ctx } from 'type-graphql';
 
 import { JoinPublicRoomService } from '../services/JoinPublicRoomService';
-import { Room } from '../../../entity/Room';
+import { Room } from '../../../entities/Room';
 import { ensureAuthenticated } from '../../middlewares/ensureAuthenticated';
 import { Context } from '../../../types/Context';
 

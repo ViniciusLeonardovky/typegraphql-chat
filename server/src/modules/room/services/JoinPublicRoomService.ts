@@ -1,8 +1,8 @@
 import { getRepository } from 'typeorm';
 
-import { Room } from '../../../entity/Room';
-import { User } from '../../../entity/User';
-import { UsersRooms } from '../../../entity/UsersRooms';
+import { Room } from '../../../entities/Room';
+import { User } from '../../../entities/User';
+import { UsersRooms } from '../../../entities/UsersRooms';
 
 import { Context } from '../../../types/Context';
 
