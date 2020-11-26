@@ -32,6 +32,9 @@ export class AuthenticateUserService {
       throw new Error('invalid email/password');
     }
 
+    user.status = 'online';
+    await user.save();
+
     ctx.req.session!.userId = user.id;
 
     return user;
