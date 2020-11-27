@@ -47,7 +47,10 @@ import { createSchema } from './utils/createSchema';
     })
   );
 
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({
+    app,
+    cors: false,
+  });
 
   app.listen(process.env.PORT, () => {
     console.log(

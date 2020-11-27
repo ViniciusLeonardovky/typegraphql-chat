@@ -1,10 +1,16 @@
 import { Box, Flex, Grid, Heading, Image, Link } from '@chakra-ui/react';
-import Input from '../components/Input';
 import Button from '../components/Button';
+import Input from '../components/Input';
 import NextLink from 'next/link';
 import { Formik } from 'formik';
+import { useRouter } from 'next/router';
+import { useRegisterMutation } from '../generated/graphql';
 
-export default function Home() {
+const Register: React.FC = ({}) => {
+  const [, register] = useRegisterMutation();
+
+  const router = useRouter();
+
   return (
     <Grid
       as='main'
@@ -41,24 +47,37 @@ export default function Home() {
         padding={16}
       >
         <Heading mb={8} alignSelf='center'>
-          Entrar no chatzin
+          Cadastro
         </Heading>
+
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ name: '', email: '', nickname: '', password: '' }}
           onSubmit={async (values, { setErrors }) => {
-            // const response = await register({ options: values });
-            // if (response.data?.register.errors) {
-            //   [{ field: 'username', message: 'something wrong' }];
-            //   setErrors(toErrorMap(response.data.register.errors));
-            // } else if (response.data?.register.user) {
-            //   // worked
-            //   router.push('/');
-            // }
-            console.log(values);
+            const response = await register(values);
+
+            router.push('/');
           }}
         >
           {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
             <form onSubmit={handleSubmit}>
+              <Box mt={1}>
+                <Input
+                  placeholder='Nome completo'
+                  type='text'
+                  name='name'
+                  onChange={handleChange}
+                  value={values.name}
+                />
+              </Box>
+              <Box mt={1}>
+                <Input
+                  placeholder='Apelido'
+                  type='text'
+                  name='nickname'
+                  onChange={handleChange}
+                  value={values.nickname}
+                />
+              </Box>
               <Box mt={1}>
                 <Input
                   placeholder='E-mail'
@@ -84,17 +103,19 @@ export default function Home() {
                 width='100%'
                 isLoading={isSubmitting}
               >
-                Entrar
+                Cadastrar
               </Button>
             </form>
           )}
         </Formik>
-        <NextLink href='/register'>
+        <NextLink href='/'>
           <Link ml='auto' mt={3}>
-            Criar conta
+            Já possuo uma conta
           </Link>
         </NextLink>
       </Flex>
     </Grid>
   );
-}
+};
+
+export default Register;
