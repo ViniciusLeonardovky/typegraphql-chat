@@ -3,8 +3,15 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import NextLink from 'next/link';
 import { Formik } from 'formik';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import { useAuthenticateUserMutation } from '../generated/graphql';
 
 export default function Home() {
+  const [, authenticateUser] = useAuthenticateUserMutation();
+
+  const router = useRouter();
+
   return (
     <Grid
       as='main'
@@ -46,18 +53,21 @@ export default function Home() {
         <Formik
           initialValues={{ email: '', password: '' }}
           onSubmit={async (values, { setErrors }) => {
-            // const response = await register({ options: values });
-            // if (response.data?.register.errors) {
-            //   [{ field: 'username', message: 'something wrong' }];
-            //   setErrors(toErrorMap(response.data.register.errors));
-            // } else if (response.data?.register.user) {
-            //   // worked
-            //   router.push('/');
-            // }
-            console.log(values);
+            const response = await authenticateUser(values);
+            if (response.error?.message) {
+              return toast.error('E-mail ou senha incorretos');
+            } else if (response.data.authenticateUser.id) {
+              // worked
+
+              if (typeof router.query.next === 'string') {
+                router.push(router.query.next);
+              } else {
+                router.push('/rooms');
+              }
+            }
           }}
         >
-          {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
+          {({ values, handleChange, handleSubmit, isSubmitting }) => (
             <form onSubmit={handleSubmit}>
               <Box mt={1}>
                 <Input

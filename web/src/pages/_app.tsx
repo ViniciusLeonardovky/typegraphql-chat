@@ -1,5 +1,6 @@
 import { Provider, createClient } from 'urql';
 import ThemeContainer from '../contexts/theme/ThemeContainer';
+import { ToastContainer } from 'react-toastify';
 
 const client = createClient({
   url: 'http://localhost:4000/graphql',
@@ -13,6 +14,7 @@ function MyApp({ Component, pageProps }) {
     <Provider value={client}>
       <ThemeContainer>
         <Component {...pageProps} />
+        <ToastContainer autoClose={3000} />
       </ThemeContainer>
     </Provider>
   );

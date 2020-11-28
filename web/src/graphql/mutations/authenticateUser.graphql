@@ -1,0 +1,12 @@
+mutation AuthenticateUser($email: String!, $password: String!) {
+  authenticateUser(email: $email, password: $password) {
+    id
+    name
+    nickname
+    email
+    avatar
+    status
+    created_at
+    updated_at
+  }
+}

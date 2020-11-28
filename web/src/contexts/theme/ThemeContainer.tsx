@@ -3,9 +3,9 @@ import React from 'react';
 import {
   ChakraProvider as ChakraThemeProvider,
   ColorModeProvider,
-  ColorModeScript,
   CSSReset,
 } from '@chakra-ui/react';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react';
 

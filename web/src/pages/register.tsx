@@ -5,6 +5,7 @@ import NextLink from 'next/link';
 import { Formik } from 'formik';
 import { useRouter } from 'next/router';
 import { useRegisterMutation } from '../generated/graphql';
+import { toast } from 'react-toastify';
 
 const Register: React.FC = ({}) => {
   const [, register] = useRegisterMutation();
@@ -52,13 +53,17 @@ const Register: React.FC = ({}) => {
 
         <Formik
           initialValues={{ name: '', email: '', nickname: '', password: '' }}
-          onSubmit={async (values, { setErrors }) => {
+          onSubmit={async (values) => {
             const response = await register(values);
-
-            router.push('/');
+            if (response.error?.message) {
+              return toast.error('Este e-mail já está sendo utilizado');
+            } else if (response.data.registerUser.id) {
+              // worked
+              router.push('/');
+            }
           }}
         >
-          {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
+          {({ values, handleChange, handleSubmit, isSubmitting }) => (
             <form onSubmit={handleSubmit}>
               <Box mt={1}>
                 <Input
