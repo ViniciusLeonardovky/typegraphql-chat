@@ -5,14 +5,43 @@ import NextLink from 'next/link';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import { useAuthenticateUserMutation } from '../generated/graphql';
+import {
+  useAuthenticateUserMutation,
+  useShowUserQuery,
+} from '../generated/graphql';
+import { isServer } from '../utils/isServer';
+import Rooms from '../components/Rooms';
+import { useEffect, useState } from 'react';
+
+interface User {
+  id: string;
+  name: string;
+  nickname: string;
+  email: string;
+}
 
 export default function Home() {
   const [, authenticateUser] = useAuthenticateUserMutation();
+  const [{ data, fetching }] = useShowUserQuery({
+    pause: isServer(),
+  });
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    if (data?.showUser) {
+      const { id, name, nickname, email } = data?.showUser;
+      setUser({
+        id,
+        name,
+        nickname,
+        email,
+      });
+    }
+  }, [data, fetching]);
 
   const router = useRouter();
 
-  return (
+  return !user ? (
     <Grid
       as='main'
       height='100vh'
@@ -62,7 +91,7 @@ export default function Home() {
               if (typeof router.query.next === 'string') {
                 router.push(router.query.next);
               } else {
-                router.push('/rooms');
+                router.reload();
               }
             }
           }}
@@ -106,5 +135,7 @@ export default function Home() {
         </NextLink>
       </Flex>
     </Grid>
+  ) : (
+    <Rooms />
   );
 }

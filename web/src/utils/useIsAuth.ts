@@ -8,7 +8,8 @@ export const useIsAuth = () => {
   useEffect(() => {
     if (!fetching && !data?.showUser) {
       // router.replace('/?next=' + router.pathname);
-      router.back();
+      // router.back();
+      router.reload();
     }
   }, [fetching, data, router]);
 };

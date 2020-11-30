@@ -2,13 +2,11 @@ import { Box, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { useLogoutMutation, useShowUserQuery } from '../generated/graphql';
 import { isServer } from '../utils/isServer';
-import { useIsAuth } from '../utils/useIsAuth';
 import Button from './Button';
 
 interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = ({}) => {
-  useIsAuth();
   const [{ fetching: logoutFetching }, logout] = useLogoutMutation();
   const [{ data, fetching }] = useShowUserQuery({
     pause: isServer(),
@@ -34,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
       <Button
         onClick={() => {
           logout();
-          router.push('/');
+          router.reload();
         }}
         isLoading={logoutFetching}
         variant='link'
@@ -42,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
         background='none'
         textColor='white'
       >
-        Logout
+        Sair
       </Button>
     </Box>
   );

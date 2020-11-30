@@ -1,15 +1,14 @@
 import { useRouter } from 'next/router';
-import Header from '../components/Header';
-import { useIsAuth } from '../utils/useIsAuth';
+import Header from './Header';
+import UserRooms from './UserRooms';
 
 const Rooms: React.FC = ({}) => {
-  useIsAuth();
   // const router = useRouter();
   return (
     <>
       <Header />
       <div>
-        <h1>aasd</h1>
+        <UserRooms />
       </div>
     </>
   );

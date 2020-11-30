@@ -1,0 +1,7 @@
+query ListAllUserRooms {
+  listAllUserRooms {
+    id
+    name
+    description
+  }
+}

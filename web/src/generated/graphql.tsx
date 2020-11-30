@@ -135,6 +135,28 @@ export type RegisterMutation = (
   ) }
 );
 
+export type ListAllPublicRoomsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListAllPublicRoomsQuery = (
+  { __typename?: 'Query' }
+  & { listAllPublicRooms: Array<(
+    { __typename?: 'Room' }
+    & Pick<Room, 'id' | 'name' | 'description'>
+  )> }
+);
+
+export type ListAllUserRoomsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListAllUserRoomsQuery = (
+  { __typename?: 'Query' }
+  & { listAllUserRooms: Array<(
+    { __typename?: 'Room' }
+    & Pick<Room, 'id' | 'name' | 'description'>
+  )> }
+);
+
 export type ShowUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -196,6 +218,32 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const ListAllPublicRoomsDocument = gql`
+    query ListAllPublicRooms {
+  listAllPublicRooms {
+    id
+    name
+    description
+  }
+}
+    `;
+
+export function useListAllPublicRoomsQuery(options: Omit<Urql.UseQueryArgs<ListAllPublicRoomsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ListAllPublicRoomsQuery>({ query: ListAllPublicRoomsDocument, ...options });
+};
+export const ListAllUserRoomsDocument = gql`
+    query ListAllUserRooms {
+  listAllUserRooms {
+    id
+    name
+    description
+  }
+}
+    `;
+
+export function useListAllUserRoomsQuery(options: Omit<Urql.UseQueryArgs<ListAllUserRoomsQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ListAllUserRoomsQuery>({ query: ListAllUserRoomsDocument, ...options });
 };
 export const ShowUserDocument = gql`
     query ShowUser {
