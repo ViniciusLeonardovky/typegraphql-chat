@@ -111,6 +111,21 @@ export type AuthenticateUserMutation = (
   ) }
 );
 
+export type CreateRoomMutationVariables = Exact<{
+  name: Scalars['String'];
+  type: Scalars['String'];
+  description: Scalars['String'];
+}>;
+
+
+export type CreateRoomMutation = (
+  { __typename?: 'Mutation' }
+  & { createRoom: (
+    { __typename?: 'Room' }
+    & Pick<Room, 'id' | 'name' | 'description' | 'type' | 'owner_id' | 'avatar' | 'created_at' | 'updated_at'>
+  ) }
+);
+
 export type LogoutMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -186,6 +201,24 @@ export const AuthenticateUserDocument = gql`
 
 export function useAuthenticateUserMutation() {
   return Urql.useMutation<AuthenticateUserMutation, AuthenticateUserMutationVariables>(AuthenticateUserDocument);
+};
+export const CreateRoomDocument = gql`
+    mutation CreateRoom($name: String!, $type: String!, $description: String!) {
+  createRoom(name: $name, type: $type, description: $description) {
+    id
+    name
+    description
+    type
+    owner_id
+    avatar
+    created_at
+    updated_at
+  }
+}
+    `;
+
+export function useCreateRoomMutation() {
+  return Urql.useMutation<CreateRoomMutation, CreateRoomMutationVariables>(CreateRoomDocument);
 };
 export const LogoutDocument = gql`
     mutation Logout {

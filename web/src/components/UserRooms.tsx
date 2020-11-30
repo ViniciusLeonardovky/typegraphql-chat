@@ -1,13 +1,17 @@
 import {
   Box,
   Heading,
+  Select,
   Tab,
   TabPanel,
   TabPanels,
   Tabs,
   Text,
 } from '@chakra-ui/react';
+import { Formik } from 'formik';
+import { toast } from 'react-toastify';
 import {
+  useCreateRoomMutation,
   useListAllPublicRoomsQuery,
   useListAllUserRoomsQuery,
 } from '../generated/graphql';
@@ -21,6 +25,7 @@ const UserRooms: React.FC = ({}) => {
   const [
     { data: allUserRooms, fetching: fetchingUserRooms },
   ] = useListAllUserRoomsQuery();
+  const [, createRoom] = useCreateRoomMutation();
 
   return (
     <Box
@@ -56,7 +61,7 @@ const UserRooms: React.FC = ({}) => {
                 color: '#000',
               }}
             >
-              Salas privadas
+              Suas salas
             </Tab>
             <Tab
               _selected={{
@@ -77,7 +82,16 @@ const UserRooms: React.FC = ({}) => {
                 <p>Carregando...</p>
               ) : publicRooms?.listAllPublicRooms[0] ? (
                 publicRooms?.listAllPublicRooms.map((room) => (
-                  <Box key={room.id}>
+                  <Box
+                    key={room.id}
+                    cursor='pointer'
+                    transition='0.2s'
+                    _hover={{
+                      bgColor: 'gray.700',
+                      borderTopRightRadius: '4px',
+                      borderTopLeftRadius: '4px',
+                    }}
+                  >
                     <Box>
                       <Heading fontSize='1.5rem' color='#fff'>
                         {room.name}
@@ -96,7 +110,16 @@ const UserRooms: React.FC = ({}) => {
                 <p>Carregando...</p>
               ) : allUserRooms?.listAllUserRooms[0] ? (
                 allUserRooms?.listAllUserRooms.map((room) => (
-                  <Box key={room.id}>
+                  <Box
+                    key={room.id}
+                    cursor='pointer'
+                    transition='0.2s'
+                    _hover={{
+                      bgColor: 'gray.700',
+                      borderTopRightRadius: '4px',
+                      borderTopLeftRadius: '4px',
+                    }}
+                  >
                     <Box>
                       <Heading fontSize='1.5rem' color='#fff'>
                         {room.name}
@@ -134,7 +157,79 @@ const UserRooms: React.FC = ({}) => {
               </Box>
             </TabPanel>
             <TabPanel>
-              <p>three!</p>
+              <Heading>Crie uma sala!</Heading>
+              <Formik
+                initialValues={{ name: '', description: '', type: '' }}
+                onSubmit={async (values, { setErrors }) => {
+                  if (!values.name || !values.description || !values.type) {
+                    return toast.error(
+                      'Todos os campos precisam estar preenchidos para criar uma sala',
+                      { autoClose: 5000 }
+                    );
+                  } else {
+                    const response = await createRoom(values);
+
+                    if (response.error?.message) {
+                      return toast.error(
+                        'Ocorreu um erro inesperado. Tente novamente.'
+                      );
+                    } else if (response.data.createRoom.id) {
+                      // worked
+                      return toast.success('Sala criada com sucesso!');
+                    }
+                  }
+                }}
+              >
+                {({ values, handleChange, handleSubmit, isSubmitting }) => (
+                  <form onSubmit={handleSubmit}>
+                    <Box mt={1}>
+                      <Input
+                        placeholder='Nome da sala'
+                        type='name'
+                        name='name'
+                        onChange={handleChange}
+                        value={values.name}
+                        variant='flushed'
+                        borderRadius='0'
+                      />
+                    </Box>
+                    <Box mt={1}>
+                      <Input
+                        placeholder='Descrição da sala'
+                        type='description'
+                        name='description'
+                        onChange={handleChange}
+                        value={values.description}
+                        variant='flushed'
+                        borderRadius='0'
+                      />
+                    </Box>
+                    <Box mt={1}>
+                      <Select
+                        height='50px'
+                        focusBorderColor='#7dff75'
+                        placeholder='Tipo da sala'
+                        name='type'
+                        onChange={handleChange}
+                        value={values.type}
+                        variant='flushed'
+                      >
+                        <option value='public'>Pública</option>
+                        <option value='private'>Privada</option>
+                      </Select>
+                    </Box>
+                    <Button
+                      mt={3}
+                      type='submit'
+                      alignSelf='stretch'
+                      width='100%'
+                      isLoading={isSubmitting}
+                    >
+                      Criar
+                    </Button>
+                  </form>
+                )}
+              </Formik>
             </TabPanel>
           </TabPanels>
         </Tabs>
