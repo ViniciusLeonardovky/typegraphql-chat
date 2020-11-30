@@ -30,8 +30,8 @@ const Header: React.FC<HeaderProps> = ({}) => {
       </Text>
 
       <Button
-        onClick={() => {
-          logout();
+        onClick={async () => {
+          await logout();
           router.reload();
         }}
         isLoading={logoutFetching}
