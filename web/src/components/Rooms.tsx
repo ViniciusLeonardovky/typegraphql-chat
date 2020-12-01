@@ -22,11 +22,11 @@ const Rooms: React.FC = ({}) => {
         <UserRooms />
       </Flex>
 
-      <Flex gridArea='chat' bgColor='darkorange'>
+      <Flex gridArea='chat' bgColor='gray.900'>
         <div>chat</div>
       </Flex>
 
-      <Flex gridArea='users' bgColor='blueviolet'>
+      <Flex gridArea='users' bgColor='gray.800'>
         <div>users</div>
       </Flex>
     </Grid>
