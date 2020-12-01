@@ -20,6 +20,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
       px={8}
       height={'6rem'}
       ml={'auto'}
+      width='100vw'
       display='flex'
       alignItems='center'
       justifyContent='space-between'

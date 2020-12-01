@@ -50,7 +50,7 @@ export default function Home() {
       templateAreas="
         '. . . .'
         '. title form .'
-        ' . . . .'
+        '. . . .'
       "
       justifyContent='center'
       alignItems='center'

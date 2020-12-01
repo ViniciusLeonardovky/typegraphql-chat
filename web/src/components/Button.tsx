@@ -11,6 +11,8 @@ const Button: React.FC<ChakraButtonProps> = (props) => {
       backgroundColor='#7dff75'
       borderRadius='sm'
       color='gray.800'
+      transition='0.3s'
+      _hover={{ textColor: 'white', bgColor: 'gray.500' }}
       {...props}
     />
   );
