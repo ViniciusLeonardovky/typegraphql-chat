@@ -1,0 +1,9 @@
+query ListAllRoomUsers($room_id: String!) {
+  listAllRoomUsers(room_id: $room_id) {
+    id
+    name
+    nickname
+    status
+    email
+  }
+}

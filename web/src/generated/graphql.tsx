@@ -22,6 +22,12 @@ export type Query = {
   showUser?: Maybe<User>;
   listAllPublicRooms: Array<Room>;
   listAllUserRooms: Array<Room>;
+  listAllRoomUsers: Array<User>;
+};
+
+
+export type QueryListAllRoomUsersArgs = {
+  room_id: Scalars['String'];
 };
 
 export type User = {
@@ -161,6 +167,19 @@ export type ListAllPublicRoomsQuery = (
   )> }
 );
 
+export type ListAllRoomUsersQueryVariables = Exact<{
+  room_id: Scalars['String'];
+}>;
+
+
+export type ListAllRoomUsersQuery = (
+  { __typename?: 'Query' }
+  & { listAllRoomUsers: Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'name' | 'nickname' | 'status' | 'email'>
+  )> }
+);
+
 export type ListAllUserRoomsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -264,6 +283,21 @@ export const ListAllPublicRoomsDocument = gql`
 
 export function useListAllPublicRoomsQuery(options: Omit<Urql.UseQueryArgs<ListAllPublicRoomsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<ListAllPublicRoomsQuery>({ query: ListAllPublicRoomsDocument, ...options });
+};
+export const ListAllRoomUsersDocument = gql`
+    query ListAllRoomUsers($room_id: String!) {
+  listAllRoomUsers(room_id: $room_id) {
+    id
+    name
+    nickname
+    status
+    email
+  }
+}
+    `;
+
+export function useListAllRoomUsersQuery(options: Omit<Urql.UseQueryArgs<ListAllRoomUsersQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ListAllRoomUsersQuery>({ query: ListAllRoomUsersDocument, ...options });
 };
 export const ListAllUserRoomsDocument = gql`
     query ListAllUserRooms {
