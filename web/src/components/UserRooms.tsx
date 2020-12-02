@@ -18,7 +18,11 @@ import {
 import Button from './Button';
 import Input from './Input';
 
-const UserRooms: React.FC = ({}) => {
+interface UserRoomsProps {
+  onClickRoom: (room_id: String) => String;
+}
+
+const UserRooms: React.FC<UserRoomsProps> = ({ onClickRoom }) => {
   const [
     { data: publicRooms, fetching: fetchingPublicRooms },
   ] = useListAllPublicRoomsQuery();
@@ -119,6 +123,7 @@ const UserRooms: React.FC = ({}) => {
                       borderTopRightRadius: '4px',
                       borderTopLeftRadius: '4px',
                     }}
+                    onClick={() => onClickRoom(room.id)}
                   >
                     <Box>
                       <Heading fontSize='1.5rem' color='#fff'>

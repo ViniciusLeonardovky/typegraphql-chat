@@ -1,8 +1,16 @@
 import { Flex, Grid } from '@chakra-ui/react';
+import { useCallback, useState } from 'react';
 import Header from './Header';
+import RoomUsers from './RoomUsers';
 import UserRooms from './UserRooms';
 
 const Rooms: React.FC = ({}) => {
+  const [roomId, setRoomId] = useState('');
+
+  const onClickRoom = useCallback((room_id: string): any => {
+    setRoomId(room_id);
+  }, []);
+
   return (
     <Grid
       as='main'
@@ -19,7 +27,7 @@ const Rooms: React.FC = ({}) => {
       </Flex>
 
       <Flex gridArea='rooms'>
-        <UserRooms />
+        <UserRooms onClickRoom={onClickRoom} />
       </Flex>
 
       <Flex gridArea='chat' bgColor='gray.900'>
@@ -27,7 +35,7 @@ const Rooms: React.FC = ({}) => {
       </Flex>
 
       <Flex gridArea='users' bgColor='gray.800'>
-        <div>users</div>
+        <RoomUsers roomId={roomId} />
       </Flex>
     </Grid>
   );
