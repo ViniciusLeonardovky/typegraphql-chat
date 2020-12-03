@@ -94,10 +94,11 @@ const UserRooms: React.FC<UserRoomsProps> = ({ onClickRoom }) => {
                       bgColor: 'gray.700',
                       borderTopRightRadius: '4px',
                       borderTopLeftRadius: '4px',
+                      paddingX: '2rem',
                     }}
                   >
                     <Box>
-                      <Heading fontSize='1.5rem' color='#fff'>
+                      <Heading fontSize='1.3rem' color='#fff'>
                         {room.name}
                       </Heading>
                       <Text color='#b8b1b1'>{room.description}</Text>
@@ -122,11 +123,12 @@ const UserRooms: React.FC<UserRoomsProps> = ({ onClickRoom }) => {
                       bgColor: 'gray.700',
                       borderTopRightRadius: '4px',
                       borderTopLeftRadius: '4px',
+                      paddingX: '2rem',
                     }}
                     onClick={() => onClickRoom(room.id)}
                   >
                     <Box>
-                      <Heading fontSize='1.5rem' color='#fff'>
+                      <Heading fontSize='1.3rem' color='#fff'>
                         {room.name}
                       </Heading>
                       <Text color='#b8b1b1'>{room.description}</Text>

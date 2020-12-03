@@ -21,10 +21,32 @@ const RoomUsers: React.FC<RoomUsers> = ({ roomId }) => {
         <p>Carregando...</p>
       ) : (
         <Box>
+          <Text
+            textAlign='center'
+            borderBottom='1px'
+            borderColor='gray.700'
+            paddingY='4'
+          >
+            Usuários
+          </Text>
           {roomUsers?.listAllRoomUsers.map((user) => (
-            <Box key={user.id} display='flex' flexDirection='column'>
+            <Box
+              key={user.id}
+              display='flex'
+              alignItems='center'
+              mb='0.5rem'
+              paddingX='1rem'
+              mt='1rem'
+            >
               <Text>{user.nickname}</Text>
-              <Text>{user.status}</Text>
+              <Box
+                marginLeft='1.5rem'
+                height='0.5rem'
+                width='0.5rem'
+                borderRadius='50%'
+                bgColor={user.status === 'online' ? '#75ff75' : '#6d6e6d'}
+                cursor='pointer'
+              />
             </Box>
           ))}
         </Box>
