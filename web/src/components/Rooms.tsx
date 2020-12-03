@@ -1,5 +1,6 @@
 import { Flex, Grid } from '@chakra-ui/react';
 import { useCallback, useState } from 'react';
+import Chat from './Chat';
 import Header from './Header';
 import RoomUsers from './RoomUsers';
 import UserRooms from './UserRooms';
@@ -31,7 +32,7 @@ const Rooms: React.FC = ({}) => {
       </Flex>
 
       <Flex gridArea='chat' bgColor='gray.900'>
-        <div>chat</div>
+        <Chat roomId={roomId} />
       </Flex>
 
       <Flex gridArea='users' bgColor='gray.800'>
