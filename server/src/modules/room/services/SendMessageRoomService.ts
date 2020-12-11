@@ -5,6 +5,7 @@ import { User } from '../../../entities/User';
 import { UsersRooms } from '../../../entities/UsersRooms';
 
 import { Context } from '../../../types/Context';
+import { MessageResponse } from '../resolvers/types/MessageResponse';
 
 interface IRequest {
   room_id: string;
@@ -12,17 +13,12 @@ interface IRequest {
   ctx: Context;
 }
 
-interface IResponse {
-  message: RoomMessage;
-  user: User;
-}
-
 export class SendMessageRoomService {
   public async execute({
     room_id,
     content,
     ctx,
-  }: IRequest): Promise<IResponse> {
+  }: IRequest): Promise<MessageResponse> {
     const roomMessagesRespository = getRepository(RoomMessage);
     const usersRespository = getRepository(User);
     const usersRoomsRespository = getRepository(UsersRooms);
