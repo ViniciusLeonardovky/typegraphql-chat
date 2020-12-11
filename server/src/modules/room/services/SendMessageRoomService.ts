@@ -27,7 +27,9 @@ export class SendMessageRoomService {
     const usersRespository = getRepository(User);
     const usersRoomsRespository = getRepository(UsersRooms);
 
-    if (!content) {
+    content = content.trim();
+
+    if (!content.trim()) {
       throw new Error('Content must be contain a value');
     }
 
