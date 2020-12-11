@@ -1,25 +1,14 @@
-[
-  {
-    "name": "default",
-    "type": "postgres",
-    "host": "",
-    "port": "",
-    "username": "",
-    "password": "",
-    "database": "",
-    "entities": ["./src/models/*.ts"],
-    "migrations": ["./src/database/migrations/*.ts"],
-    "cli": {
-      "migrationsDir": "./src/database/migrations"
-    }
-  },
-  {
-    "name": "mongo",
-    "type": "mongodb",
-    "host": "",
-    "port": "",
-    "database": "",
-    "useUnifiedTopology": true,
-    "entities": ["./src/modules/**/infra/typeorm/schemas/*.ts"]
+{
+  "name": "default",
+  "type": "postgres",
+  "host": "",
+  "port": "",
+  "username": "",
+  "password": "",
+  "database": "",
+  "entities": ["./src/entities/*.ts"],
+  "migrations": ["./src/database/migrations/*.ts"],
+  "cli": {
+    "migrationsDir": "./src/database/migrations"
   }
-]
+}
