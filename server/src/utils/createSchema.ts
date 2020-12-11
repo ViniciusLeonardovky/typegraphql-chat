@@ -13,6 +13,7 @@ import { JoinPublicRoomResolver } from '../modules/room/resolvers/JoinPublicRoom
 import { JoinPrivateRoomResolver } from '../modules/room/resolvers/JoinPrivateRoomResolver';
 import { GenerateInvitePrivateRoomResolver } from '../modules/room/resolvers/GenerateInvitePrivateRoomResolver';
 import { ListAllRoomUsersResolver } from '../modules/room/resolvers/ListAllRoomUsersResolver';
+import { SendMessageRoom } from '../modules/room/resolvers/SendMessageRoom';
 
 export const createSchema = () =>
   buildSchema({
@@ -30,6 +31,7 @@ export const createSchema = () =>
       JoinPrivateRoomResolver,
       GenerateInvitePrivateRoomResolver,
       ListAllRoomUsersResolver,
+      SendMessageRoom,
     ],
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;
