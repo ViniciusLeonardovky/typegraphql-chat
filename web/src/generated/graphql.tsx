@@ -23,10 +23,16 @@ export type Query = {
   listAllPublicRooms: Array<Room>;
   listAllUserRooms: Array<Room>;
   listAllRoomUsers: Array<User>;
+  listAllUsersMessagesRoom: Array<MessagesResponse>;
 };
 
 
 export type QueryListAllRoomUsersArgs = {
+  room_id: Scalars['String'];
+};
+
+
+export type QueryListAllUsersMessagesRoomArgs = {
   room_id: Scalars['String'];
 };
 
@@ -55,6 +61,17 @@ export type Room = {
   updated_at: Scalars['DateTime'];
 };
 
+export type MessagesResponse = {
+  __typename?: 'MessagesResponse';
+  id: Scalars['String'];
+  content: Scalars['String'];
+  created_at: Scalars['DateTime'];
+  updated_at: Scalars['DateTime'];
+  room_id: Scalars['String'];
+  username: Scalars['String'];
+  nickname: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   registerUser: User;
@@ -65,6 +82,7 @@ export type Mutation = {
   joinPublicRoom: Room;
   joinPrivateRoom: Scalars['Boolean'];
   generateInvitePrivateRoom: Scalars['String'];
+  sendMessageRoom: MessageResponse;
 };
 
 
@@ -101,6 +119,28 @@ export type MutationJoinPrivateRoomArgs = {
 
 export type MutationGenerateInvitePrivateRoomArgs = {
   room_id: Scalars['String'];
+};
+
+
+export type MutationSendMessageRoomArgs = {
+  content: Scalars['String'];
+  room_id: Scalars['String'];
+};
+
+export type MessageResponse = {
+  __typename?: 'MessageResponse';
+  message: RoomMessage;
+  user: User;
+};
+
+export type RoomMessage = {
+  __typename?: 'RoomMessage';
+  id: Scalars['ID'];
+  user_id: Scalars['String'];
+  room_id: Scalars['String'];
+  content: Scalars['String'];
+  created_at: Scalars['DateTime'];
+  updated_at: Scalars['DateTime'];
 };
 
 export type AuthenticateUserMutationVariables = Exact<{
@@ -188,6 +228,19 @@ export type ListAllUserRoomsQuery = (
   & { listAllUserRooms: Array<(
     { __typename?: 'Room' }
     & Pick<Room, 'id' | 'name' | 'description'>
+  )> }
+);
+
+export type ListAllUsersMessagesRoomQueryVariables = Exact<{
+  room_id: Scalars['String'];
+}>;
+
+
+export type ListAllUsersMessagesRoomQuery = (
+  { __typename?: 'Query' }
+  & { listAllUsersMessagesRoom: Array<(
+    { __typename?: 'MessagesResponse' }
+    & Pick<MessagesResponse, 'id' | 'content' | 'created_at' | 'updated_at' | 'username' | 'nickname'>
   )> }
 );
 
@@ -311,6 +364,22 @@ export const ListAllUserRoomsDocument = gql`
 
 export function useListAllUserRoomsQuery(options: Omit<Urql.UseQueryArgs<ListAllUserRoomsQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<ListAllUserRoomsQuery>({ query: ListAllUserRoomsDocument, ...options });
+};
+export const ListAllUsersMessagesRoomDocument = gql`
+    query ListAllUsersMessagesRoom($room_id: String!) {
+  listAllUsersMessagesRoom(room_id: $room_id) {
+    id
+    content
+    created_at
+    updated_at
+    username
+    nickname
+  }
+}
+    `;
+
+export function useListAllUsersMessagesRoomQuery(options: Omit<Urql.UseQueryArgs<ListAllUsersMessagesRoomQueryVariables>, 'query'> = {}) {
+  return Urql.useQuery<ListAllUsersMessagesRoomQuery>({ query: ListAllUsersMessagesRoomDocument, ...options });
 };
 export const ShowUserDocument = gql`
     query ShowUser {

@@ -1,0 +1,10 @@
+query ListAllUsersMessagesRoom($room_id: String!) {
+  listAllUsersMessagesRoom(room_id: $room_id) {
+    id
+    content
+    created_at
+    updated_at
+    username
+    nickname
+  }
+}
