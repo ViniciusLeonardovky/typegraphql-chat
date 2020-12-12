@@ -196,6 +196,26 @@ export type RegisterMutation = (
   ) }
 );
 
+export type SendMessageRoomMutationVariables = Exact<{
+  room_id: Scalars['String'];
+  content: Scalars['String'];
+}>;
+
+
+export type SendMessageRoomMutation = (
+  { __typename?: 'Mutation' }
+  & { sendMessageRoom: (
+    { __typename?: 'MessageResponse' }
+    & { message: (
+      { __typename?: 'RoomMessage' }
+      & Pick<RoomMessage, 'id' | 'content' | 'created_at'>
+    ), user: (
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'nickname'>
+    ) }
+  ) }
+);
+
 export type ListAllPublicRoomsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -323,6 +343,25 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const SendMessageRoomDocument = gql`
+    mutation SendMessageRoom($room_id: String!, $content: String!) {
+  sendMessageRoom(room_id: $room_id, content: $content) {
+    message {
+      id
+      content
+      created_at
+    }
+    user {
+      id
+      nickname
+    }
+  }
+}
+    `;
+
+export function useSendMessageRoomMutation() {
+  return Urql.useMutation<SendMessageRoomMutation, SendMessageRoomMutationVariables>(SendMessageRoomDocument);
 };
 export const ListAllPublicRoomsDocument = gql`
     query ListAllPublicRooms {

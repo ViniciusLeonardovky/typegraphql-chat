@@ -1,5 +1,9 @@
 import { Box, Grid, Text } from '@chakra-ui/react';
-import { useListAllUsersMessagesRoomQuery } from '../generated/graphql';
+import { Formik } from 'formik';
+import {
+  useListAllUsersMessagesRoomQuery,
+  useSendMessageRoomMutation,
+} from '../generated/graphql';
 import Input from './Input';
 
 interface ChatProps {
@@ -10,6 +14,22 @@ const Chat: React.FC<ChatProps> = ({ roomId }) => {
   const [{ data: messagesUsers, fetching }] = useListAllUsersMessagesRoomQuery({
     variables: { room_id: roomId },
   });
+  // const [message, setMessage] = useState('');
+  const [, sendMessage] = useSendMessageRoomMutation();
+
+  // const handleSendMessage = useCallback(
+  //   async (event: KeyboardEvent<HTMLInputElement>) => {
+  //     if (event.key !== 'Enter') {
+  //       return;
+  //     }
+  //     if (!message) {
+  //       return;
+  //     }
+  //     await sendMessage({ room_id: roomId, content: message });
+  //     setMessage('');
+  //   },
+  //   []
+  // );
 
   return (
     <Grid
@@ -39,6 +59,13 @@ const Chat: React.FC<ChatProps> = ({ roomId }) => {
         bgColor='gray.800'
         borderBottom='1px'
         borderColor='gray.700'
+        maxHeight='calc(100vh - 210px)'
+        overflowY='scroll'
+        style={{
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'gray.900',
+          WebkitScrollSnapType: 'both',
+        }}
       >
         {!roomId ? (
           <p>Chatizin da uol poggers</p>
@@ -75,12 +102,32 @@ const Chat: React.FC<ChatProps> = ({ roomId }) => {
         alignItems='center'
         justifyContent='center'
       >
-        <Input
-          width='calc(100% - 50px)'
-          height='calc(100% - 15px)'
-          focusBorderColor='#7dff75'
-          fontSize='14px'
-        />
+        <Formik
+          initialValues={{ content: '' }}
+          onSubmit={async (values, { setErrors }) => {
+            await sendMessage({ content: values.content, room_id: roomId });
+            values.content = '';
+          }}
+        >
+          {({ values, handleChange, handleSubmit, isSubmitting }) => (
+            <form
+              onSubmit={handleSubmit}
+              style={{
+                height: 'calc(100% - 5px)',
+                width: 'calc(100% - 50px)',
+              }}
+            >
+              <Input
+                placeholder='Digite sua mensagem'
+                name='content'
+                focusBorderColor='#7dff75'
+                value={values.content}
+                onChange={handleChange}
+                fontSize='14px'
+              />
+            </form>
+          )}
+        </Formik>
       </Box>
     </Grid>
   );
