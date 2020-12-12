@@ -1,5 +1,5 @@
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 ::-webkit-scrollbar-thumb {
   background-color: #a1b1c7;
@@ -13,5 +13,5 @@
 body {
   /* Firefox */
   scrollbar-width: thin;
-  scrollbar-color: var(--tertiary) var(--secondary);
+  scrollbar-color: #a1b1c7 rgba(132, 143, 150, 0.418);
 }

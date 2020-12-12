@@ -1,5 +1,6 @@
 import { Box, Grid, Text } from '@chakra-ui/react';
 import { Formik } from 'formik';
+import { useCallback, useEffect, useRef } from 'react';
 import {
   useListAllUsersMessagesRoomQuery,
   useSendMessageRoomMutation,
@@ -14,22 +15,23 @@ const Chat: React.FC<ChatProps> = ({ roomId }) => {
   const [{ data: messagesUsers, fetching }] = useListAllUsersMessagesRoomQuery({
     variables: { room_id: roomId },
   });
-  // const [message, setMessage] = useState('');
+  const messagesRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+
   const [, sendMessage] = useSendMessageRoomMutation();
 
-  // const handleSendMessage = useCallback(
-  //   async (event: KeyboardEvent<HTMLInputElement>) => {
-  //     if (event.key !== 'Enter') {
-  //       return;
-  //     }
-  //     if (!message) {
-  //       return;
-  //     }
-  //     await sendMessage({ room_id: roomId, content: message });
-  //     setMessage('');
-  //   },
-  //   []
-  // );
+  const scrollToBottom = useCallback(() => {
+    let div = messagesRef.current;
+
+    if (div) {
+      div.scrollTop = div.scrollHeight;
+    }
+  }, [messagesRef]);
+
+  useEffect(() => {
+    if (!!messagesUsers?.listAllUsersMessagesRoom[0]) {
+      scrollToBottom();
+    }
+  }, [messagesRef, fetching]);
 
   return (
     <Grid
@@ -51,7 +53,7 @@ const Chat: React.FC<ChatProps> = ({ roomId }) => {
         display='flex'
         alignItems='center'
       >
-        Titulo
+        titulo
       </Box>
 
       <Box
@@ -60,12 +62,8 @@ const Chat: React.FC<ChatProps> = ({ roomId }) => {
         borderBottom='1px'
         borderColor='gray.700'
         maxHeight='calc(100vh - 210px)'
-        overflowY='scroll'
-        style={{
-          scrollbarWidth: 'thin',
-          scrollbarColor: 'gray.900',
-          WebkitScrollSnapType: 'both',
-        }}
+        overflowY='auto'
+        ref={messagesRef}
       >
         {!roomId ? (
           <p>Chatizin da uol poggers</p>
