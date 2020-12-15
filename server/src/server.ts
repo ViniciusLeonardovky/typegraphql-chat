@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import http from 'http';
 import 'dotenv/config';
 import { ApolloServer } from 'apollo-server-express';
 import express from 'express';
@@ -17,6 +18,9 @@ import { createSchema } from './utils/createSchema';
 
   const apolloServer = new ApolloServer({
     schema,
+    subscriptions: {
+      path: '/subscriptions',
+    },
     context: ({ req, res }: any) => ({ req, res }),
   });
 
@@ -52,7 +56,10 @@ import { createSchema } from './utils/createSchema';
     cors: false,
   });
 
-  app.listen(process.env.PORT, () => {
+  const httpServer = http.createServer(app);
+  apolloServer.installSubscriptionHandlers(httpServer);
+
+  httpServer.listen(process.env.PORT, () => {
     console.log(
       `server started on http://localhost:${process.env.PORT}/graphql`
     );

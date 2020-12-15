@@ -15,6 +15,7 @@ import { GenerateInvitePrivateRoomResolver } from '../modules/room/resolvers/Gen
 import { ListAllRoomUsersResolver } from '../modules/room/resolvers/ListAllRoomUsersResolver';
 import { SendMessageRoomResolver } from '../modules/room/resolvers/SendMessageRoomResolver';
 import { ListAllUsersMessagesRoomResolver } from '../modules/room/resolvers/ListAllUsersMessagesRoomResolver';
+import NewMessageRoomSubscription from '../modules/room/resolvers/NewMessageRoomSubscription';
 
 export const createSchema = () =>
   buildSchema({
@@ -34,6 +35,7 @@ export const createSchema = () =>
       ListAllRoomUsersResolver,
       SendMessageRoomResolver,
       ListAllUsersMessagesRoomResolver,
+      NewMessageRoomSubscription,
     ],
     authChecker: ({ context: { req } }) => {
       return !!req.session.userId;
