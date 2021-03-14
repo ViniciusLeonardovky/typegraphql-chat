@@ -15,6 +15,7 @@ const Chat: React.FC<ChatProps> = ({ roomId }) => {
   const [{ data: messagesUsers, fetching }] = useListAllUsersMessagesRoomQuery({
     variables: { room_id: roomId },
   });
+
   const messagesRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const [, sendMessage] = useSendMessageRoomMutation();
@@ -29,9 +30,10 @@ const Chat: React.FC<ChatProps> = ({ roomId }) => {
 
   useEffect(() => {
     if (!!messagesUsers?.listAllUsersMessagesRoom[0]) {
+      console.log('asd');
       scrollToBottom();
     }
-  }, [messagesRef, fetching]);
+  }, [messagesRef]);
 
   return (
     <Grid
@@ -64,12 +66,15 @@ const Chat: React.FC<ChatProps> = ({ roomId }) => {
         maxHeight='calc(100vh - 210px)'
         overflowY='auto'
         ref={messagesRef}
+        display='flex'
+        flexDirection='column-reverse'
       >
         {!roomId ? (
           <p>Chatizin da uol poggers</p>
-        ) : fetching ? (
-          <p>Carregando...</p>
         ) : (
+          // : fetching ? (
+          //   <p>Carregando...</p>
+          // )
           <Box paddingX='15px'>
             {messagesUsers?.listAllUsersMessagesRoom.map((message) => (
               <Box key={message.id} fontSize='14px' marginY='10px'>
@@ -102,12 +107,12 @@ const Chat: React.FC<ChatProps> = ({ roomId }) => {
       >
         <Formik
           initialValues={{ content: '' }}
-          onSubmit={async (values, { setErrors }) => {
+          onSubmit={async (values) => {
             await sendMessage({ content: values.content, room_id: roomId });
             values.content = '';
           }}
         >
-          {({ values, handleChange, handleSubmit, isSubmitting }) => (
+          {({ values, handleChange, handleSubmit }) => (
             <form
               onSubmit={handleSubmit}
               style={{

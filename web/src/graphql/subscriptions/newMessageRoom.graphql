@@ -1,0 +1,12 @@
+subscription NewMessageRoom {
+  newMessageRoom {
+    message {
+      id
+      content
+      created_at
+    }
+    user {
+      nickname
+    }
+  }
+}

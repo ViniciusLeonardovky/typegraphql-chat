@@ -1,13 +1,3 @@
 mutation SendMessageRoom($room_id: String!, $content: String!) {
-  sendMessageRoom(room_id: $room_id, content: $content) {
-    message {
-      id
-      content
-      created_at
-    }
-    user {
-      id
-      nickname
-    }
-  }
+  sendMessageRoom(room_id: $room_id, content: $content)
 }

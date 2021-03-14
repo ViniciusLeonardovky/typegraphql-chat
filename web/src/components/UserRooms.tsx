@@ -110,7 +110,7 @@ const UserRooms: React.FC<UserRoomsProps> = ({ onClickRoom }) => {
                 <Text>Nenhuma sala encontrada</Text>
               )}
             </TabPanel>
-            <TabPanel>
+            <TabPanel maxHeight='calc(100vh - 210px)' overflowY='auto'>
               {fetchingUserRooms ? (
                 <p>Carregando...</p>
               ) : allUserRooms?.listAllUserRooms[0] ? (
@@ -141,8 +141,8 @@ const UserRooms: React.FC<UserRoomsProps> = ({ onClickRoom }) => {
                   <Text>Você não está em nenhuma sala :c</Text>
                 </Box>
               )}
-              <Box mt='6rem'>
-                <Text fontSize='0.9rem' mb='5px' color='violet'>
+              <Box mt='5.5rem'>
+                <Text fontSize='0.9rem' color='violet'>
                   Digite abaixo um código válido para entrar em uma sala privada
                 </Text>
                 <Box

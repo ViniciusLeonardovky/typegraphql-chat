@@ -29,8 +29,11 @@ export class SendMessageRoomService {
       throw new Error('Content must be contain a value');
     }
 
+    const user_id = ctx.req.session!.userId;
+    console.log('->', user_id);
+
     const userExistsInRoom = await usersRoomsRespository.findOne({
-      where: { room_id, user_id: ctx.req.session!.userId },
+      where: { room_id, user_id },
     });
 
     if (!userExistsInRoom) {
@@ -38,7 +41,7 @@ export class SendMessageRoomService {
     }
 
     const user = await usersRespository.findOne({
-      where: { id: ctx.req.session!.userId },
+      where: { id: user_id },
     });
 
     if (!user) {

@@ -29,26 +29,28 @@ const RoomUsers: React.FC<RoomUsers> = ({ roomId }) => {
           >
             Usuários
           </Text>
-          {roomUsers?.listAllRoomUsers.map((user) => (
-            <Box
-              key={user.id}
-              display='flex'
-              alignItems='center'
-              mb='0.5rem'
-              paddingX='1rem'
-              mt='1rem'
-            >
-              <Text>{user.nickname}</Text>
+          <Box maxHeight='calc(100vh - 9.6rem)' overflowY='auto'>
+            {roomUsers?.listAllRoomUsers.map((user) => (
               <Box
-                marginLeft='1.5rem'
-                height='0.5rem'
-                width='0.5rem'
-                borderRadius='50%'
-                bgColor={user.status === 'online' ? '#75ff75' : '#6d6e6d'}
-                cursor='pointer'
-              />
-            </Box>
-          ))}
+                key={user.id}
+                display='flex'
+                alignItems='center'
+                mb='0.5rem'
+                paddingX='1rem'
+                mt='1rem'
+              >
+                <Text>{user.nickname}</Text>
+                <Box
+                  marginLeft='1.5rem'
+                  height='0.5rem'
+                  width='0.5rem'
+                  borderRadius='50%'
+                  bgColor={user.status === 'online' ? '#75ff75' : '#6d6e6d'}
+                  cursor='pointer'
+                />
+              </Box>
+            ))}
+          </Box>
         </Box>
       )}
     </Box>

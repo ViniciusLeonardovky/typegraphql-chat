@@ -82,7 +82,7 @@ export type Mutation = {
   joinPublicRoom: Room;
   joinPrivateRoom: Scalars['Boolean'];
   generateInvitePrivateRoom: Scalars['String'];
-  sendMessageRoom: MessageResponse;
+  sendMessageRoom: Scalars['Boolean'];
 };
 
 
@@ -125,6 +125,11 @@ export type MutationGenerateInvitePrivateRoomArgs = {
 export type MutationSendMessageRoomArgs = {
   content: Scalars['String'];
   room_id: Scalars['String'];
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  newMessageRoom: MessageResponse;
 };
 
 export type MessageResponse = {
@@ -204,16 +209,7 @@ export type SendMessageRoomMutationVariables = Exact<{
 
 export type SendMessageRoomMutation = (
   { __typename?: 'Mutation' }
-  & { sendMessageRoom: (
-    { __typename?: 'MessageResponse' }
-    & { message: (
-      { __typename?: 'RoomMessage' }
-      & Pick<RoomMessage, 'id' | 'content' | 'created_at'>
-    ), user: (
-      { __typename?: 'User' }
-      & Pick<User, 'id' | 'nickname'>
-    ) }
-  ) }
+  & Pick<Mutation, 'sendMessageRoom'>
 );
 
 export type ListAllPublicRoomsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -273,6 +269,23 @@ export type ShowUserQuery = (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'name' | 'nickname' | 'email' | 'avatar' | 'status' | 'created_at' | 'updated_at'>
   )> }
+);
+
+export type NewMessageRoomSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NewMessageRoomSubscription = (
+  { __typename?: 'Subscription' }
+  & { newMessageRoom: (
+    { __typename?: 'MessageResponse' }
+    & { message: (
+      { __typename?: 'RoomMessage' }
+      & Pick<RoomMessage, 'id' | 'content' | 'created_at'>
+    ), user: (
+      { __typename?: 'User' }
+      & Pick<User, 'nickname'>
+    ) }
+  ) }
 );
 
 
@@ -346,17 +359,7 @@ export function useRegisterMutation() {
 };
 export const SendMessageRoomDocument = gql`
     mutation SendMessageRoom($room_id: String!, $content: String!) {
-  sendMessageRoom(room_id: $room_id, content: $content) {
-    message {
-      id
-      content
-      created_at
-    }
-    user {
-      id
-      nickname
-    }
-  }
+  sendMessageRoom(room_id: $room_id, content: $content)
 }
     `;
 
@@ -437,4 +440,22 @@ export const ShowUserDocument = gql`
 
 export function useShowUserQuery(options: Omit<Urql.UseQueryArgs<ShowUserQueryVariables>, 'query'> = {}) {
   return Urql.useQuery<ShowUserQuery>({ query: ShowUserDocument, ...options });
+};
+export const NewMessageRoomDocument = gql`
+    subscription NewMessageRoom {
+  newMessageRoom {
+    message {
+      id
+      content
+      created_at
+    }
+    user {
+      nickname
+    }
+  }
+}
+    `;
+
+export function useNewMessageRoomSubscription<TData = NewMessageRoomSubscription>(options: Omit<Urql.UseSubscriptionArgs<NewMessageRoomSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandler<NewMessageRoomSubscription, TData>) {
+  return Urql.useSubscription<NewMessageRoomSubscription, TData, NewMessageRoomSubscriptionVariables>({ query: NewMessageRoomDocument, ...options }, handler);
 };
